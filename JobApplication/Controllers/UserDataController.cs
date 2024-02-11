@@ -23,25 +23,8 @@ namespace JobApplication.Controllers
         /// <example>
         /// GET: api/AnimalData/ListAnimals
         /// </example>
-        [HttpGet]
-        [ResponseType(typeof(UserDto))]
-        public IHttpActionResult ListUsers()
-        {
-            List<User> Users = db.Users.ToList();
-            List<UserDto> UserDtos = new List<UserDto>();
-
-            Users.ForEach(a => UserDtos.Add(new UserDto()
-            {
-                UserId = a.UserId,
-                UserName = a.UserName,
-                UserEmail = a.UserEmail,
-                UserPortfolioUrl = a.UserPortfolioUrl,
-                AppliedJobs = a.AppliedJobs,
-                SpeciesID = a.Species.SpeciesID,
-                SpeciesName = a.Species.SpeciesName
-            }));
-
-            return Ok(UserDto);
-        }
+        
+       
+     
     }
 }

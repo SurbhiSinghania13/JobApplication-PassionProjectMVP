@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace JobApplication.Models
+namespace jobApplicationTracking.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
@@ -24,9 +24,9 @@ namespace JobApplication.Models
             : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
-
-        public DbSet<User> users { get; set; }
-
+        public DbSet<User> Users1 { get; set; }
+        public DbSet<jobApplication> jobApplications { get; set; }
+        public DbSet<companies> companies { get; set; }
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();

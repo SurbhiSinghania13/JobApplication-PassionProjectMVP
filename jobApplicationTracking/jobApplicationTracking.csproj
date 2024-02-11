@@ -9,17 +9,17 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{CFEE7CE9-6C63-4995-83CA-F3A40ABB0C64}</ProjectGuid>
+    <ProjectGuid>{46E4FDDC-6CA3-459F-908A-10E58984DC71}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>JobApplication</RootNamespace>
-    <AssemblyName>JobApplication</AssemblyName>
+    <RootNamespace>jobApplicationTracking</RootNamespace>
+    <AssemblyName>jobApplicationTracking</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
-    <IISExpressSSLPort>44377</IISExpressSSLPort>
+    <IISExpressSSLPort>44316</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -182,27 +182,49 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CompanyDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\jobApplicationDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202402092257105_InitialCreate.cs" />
-    <Compile Include="Migrations\202402092257105_InitialCreate.designer.cs">
-      <DependentUpon>202402092257105_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\202402110239410_InitialCreate.cs" />
+    <Compile Include="Migrations\202402110239410_InitialCreate.designer.cs">
+      <DependentUpon>202402110239410_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202402092312200_users.cs" />
-    <Compile Include="Migrations\202402092312200_users.designer.cs">
-      <DependentUpon>202402092312200_users.cs</DependentUpon>
+    <Compile Include="Migrations\202402110245161_users.cs" />
+    <Compile Include="Migrations\202402110245161_users.designer.cs">
+      <DependentUpon>202402110245161_users.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202402100417581_jobApplications.cs" />
-    <Compile Include="Migrations\202402100417581_jobApplications.designer.cs">
-      <DependentUpon>202402100417581_jobApplications.cs</DependentUpon>
+    <Compile Include="Migrations\202402110251225_jobapplications.cs" />
+    <Compile Include="Migrations\202402110251225_jobapplications.designer.cs">
+      <DependentUpon>202402110251225_jobapplications.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202402100420188_companies.cs" />
-    <Compile Include="Migrations\202402100420188_companies.designer.cs">
-      <DependentUpon>202402100420188_companies.cs</DependentUpon>
+    <Compile Include="Migrations\202402110256479_companies.cs" />
+    <Compile Include="Migrations\202402110256479_companies.designer.cs">
+      <DependentUpon>202402110256479_companies.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402110304553_jobapplicationcompany.cs" />
+    <Compile Include="Migrations\202402110304553_jobapplicationcompany.designer.cs">
+      <DependentUpon>202402110304553_jobapplicationcompany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402110320407_jobapplications2.cs" />
+    <Compile Include="Migrations\202402110320407_jobapplications2.designer.cs">
+      <DependentUpon>202402110320407_jobapplications2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402110334535_jobapplications3.cs" />
+    <Compile Include="Migrations\202402110334535_jobapplications3.designer.cs">
+      <DependentUpon>202402110334535_jobapplications3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402110335532_jobapplications4.cs" />
+    <Compile Include="Migrations\202402110335532_jobapplications4.designer.cs">
+      <DependentUpon>202402110335532_jobapplications4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402110351329_jobapplicationusers.cs" />
+    <Compile Include="Migrations\202402110351329_jobapplicationusers.designer.cs">
+      <DependentUpon>202402110351329_jobapplicationusers.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -240,6 +262,9 @@
     <Content Include="Scripts\bootstrap.esm.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="jsondata\jobApplication2.json" />
+    <Content Include="jsondata\u.json" />
+    <Content Include="jsondata\company.json" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -317,17 +342,32 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202402092257105_InitialCreate.resx">
-      <DependentUpon>202402092257105_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202402110239410_InitialCreate.resx">
+      <DependentUpon>202402110239410_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402092312200_users.resx">
-      <DependentUpon>202402092312200_users.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202402110245161_users.resx">
+      <DependentUpon>202402110245161_users.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402100417581_jobApplications.resx">
-      <DependentUpon>202402100417581_jobApplications.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202402110251225_jobapplications.resx">
+      <DependentUpon>202402110251225_jobapplications.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402100420188_companies.resx">
-      <DependentUpon>202402100420188_companies.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202402110256479_companies.resx">
+      <DependentUpon>202402110256479_companies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402110304553_jobapplicationcompany.resx">
+      <DependentUpon>202402110304553_jobapplicationcompany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402110320407_jobapplications2.resx">
+      <DependentUpon>202402110320407_jobapplications2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402110334535_jobapplications3.resx">
+      <DependentUpon>202402110334535_jobapplications3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402110335532_jobapplications4.resx">
+      <DependentUpon>202402110335532_jobapplications4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402110351329_jobapplicationusers.resx">
+      <DependentUpon>202402110351329_jobapplicationusers.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -346,9 +386,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>62066</DevelopmentServerPort>
+          <DevelopmentServerPort>62153</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>https://localhost:44377/</IISUrl>
+          <IISUrl>https://localhost:44316/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
