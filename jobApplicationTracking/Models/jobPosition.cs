@@ -13,7 +13,8 @@ namespace jobApplicationTracking.Models
         public int JobApplicationID { get; set; }
         public string JobTitle { get; set; }
 
-        //public string CompanyName { get; set; }
+        //weight is in kg
+        public string CompanyName { get; set; }
 
         public string JobLocation { get; set;}
 
@@ -27,9 +28,12 @@ namespace jobApplicationTracking.Models
     {
         public int JobApplicationID { get; set; }
         public string JobTitle { get; set; }
+
+        //weight is in kg
+        public string CompanyName { get; set; }
+
         public string JobLocation { get; set; }
         public int CompanyID { get; set; }
-        public string CompanyName { get; set; }
         public string Industry { get; set; }
 
 

@@ -1,0 +1,40 @@
+﻿@model IEnumerable<jobApplicationTracking.Models.CompaniesDto>
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Create New Job Position</h2>
+                    <form action="/jobApplication/Create" method="POST">
+                        <div class="mb-3">
+                            <label for="jobTitle" class="form-label">Job Title:</label>
+                            <input type="text" class="form-control" id="jobTitle" name="JobTitle">
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobLocation" class="form-label">Job Location:</label>
+                            <input type="text" class="form-control" id="jobLocation" name="JobLocation">
+                        </div>
+                        <div class="mb-3">
+                            <label for="company" class="form-label">Company:</label>
+                            <select class="form-select" id="company" name="CompanyID">
+                                @foreach (var company in Model)
+                                {
+                                    <option value="@company.CompanyID">@company.CompanyName</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add Position</button>
+                        <a href="/jobApplication/List" class="btn btn-secondary mt-3">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

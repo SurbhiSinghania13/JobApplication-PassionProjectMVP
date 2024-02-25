@@ -14,12 +14,12 @@ using System.Diagnostics;
 
 namespace jobApplicationTracking.Controllers
 {
-    public class jobApplicationDataController : ApiController
+    public class jobPositionDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         
         /// <summary>
-        /// Returns all jobApplication in the system.
+        /// Returns all jobPosition in the system.
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
@@ -40,7 +40,7 @@ namespace jobApplicationTracking.Controllers
             {
                 JobApplicationID = j.JobApplicationID,
                 JobTitle = j.JobTitle,
-                //CompanyName = j.CompanyName,
+                CompanyName = j.CompanyName,
                 JobLocation = j.JobLocation,
                 CompanyID = j.companies.CompanyID,
                 Industry = j.companies.Industry
@@ -73,7 +73,7 @@ namespace jobApplicationTracking.Controllers
             {
                 JobApplicationID = j.JobApplicationID,
                 JobTitle = j.JobTitle,
-                //CompanyName = j.CompanyName,
+                CompanyName = j.CompanyName,
                 JobLocation = j.JobLocation,
                 CompanyID = j.companies.CompanyID,
                 Industry = j.companies.Industry
@@ -108,7 +108,7 @@ namespace jobApplicationTracking.Controllers
             {
                 JobApplicationID = j.JobApplicationID,
                 JobTitle = j.JobTitle,
-               // CompanyName = j.CompanyName,
+                CompanyName = j.CompanyName,
                 JobLocation = j.JobLocation,
                 CompanyID = j.companies.CompanyID,
                 Industry = j.companies.Industry
@@ -116,39 +116,6 @@ namespace jobApplicationTracking.Controllers
 
             return Ok(jobApplicationDtos);
         }
-
-        /// <summary>
-        /// Returns applications in the system not applied by particular user.
-        /// </summary>
-        /// <returns>
-        /// HEADER: 200 (OK)
-        /// CONTENT: all applications in the database not applied by user
-        /// </returns>
-        /// <param name="id">User Primary Key</param>
-        /// <example>
-        /// GET: api/jobApplicationData/ListApplicationsNotRegByUser/1
-        /// </example>
-        [HttpGet]
-        [Route("api/jobApplicationData/ListApplicationsNotRegByUser/{id}")]
-        [ResponseType(typeof(jobApplicationDto))]
-        public IHttpActionResult ListApplicationsNotRegByUser(int id)
-        {
-            List<jobApplication> jobApplications = db.jobApplications.Where(
-                j => !j.users.Any(
-                    u => u.UserId == id)
-                ).ToList();
-            List<jobApplicationDto> jobApplicationDtos = new List<jobApplicationDto>();
-
-            jobApplications.ForEach(j => jobApplicationDtos.Add(new jobApplicationDto()
-            {
-                JobApplicationID = j.JobApplicationID,
-                JobTitle = j.JobTitle
-            }));
-
-            return Ok(jobApplicationDtos);
-        }
-
-
         /// <summary>
         /// Returns all jobApplications in the system.
         /// </summary>
@@ -172,7 +139,7 @@ namespace jobApplicationTracking.Controllers
             {
                 JobApplicationID = jobApplication.JobApplicationID,
                 JobTitle = jobApplication.JobTitle,
-                //CompanyName = jobApplication.CompanyName,
+                CompanyName = jobApplication.CompanyName,
                 JobLocation = jobApplication.JobLocation,
                 CompanyID = jobApplication.companies.CompanyID,
                 Industry = jobApplication.companies.Industry
@@ -252,17 +219,17 @@ namespace jobApplicationTracking.Controllers
         [ResponseType(typeof(jobApplication))]
         [Route("api/jobApplicationData/AddJobApplication")]
         [HttpPost]
-        public IHttpActionResult AddJobApplication(jobApplication jobApplication)
+        public IHttpActionResult AddJobApplication(jobApplication jobApplication2)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.jobApplications.Add(jobApplication);
+            db.jobApplications.Add(jobApplication2);
             db.SaveChanges();
 
-            return CreatedAtRoute("DefaultApi", new { id = jobApplication.JobApplicationID }, jobApplication);
+            return CreatedAtRoute("DefaultApi", new { id = jobApplication2.JobApplicationID }, jobApplication2);
         }
         /// <summary>
         /// Deletes an jobApplication from the system by it's ID.

@@ -8,10 +8,11 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Diagnostics;
 
 namespace jobApplicationTracking.Controllers
 {
-    public class CompanyDataController : ApiController
+    public class companiesDataController : ApiController
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
@@ -77,6 +78,85 @@ namespace jobApplicationTracking.Controllers
             }
 
             return Ok(CompaniesDto);
+        }
+
+        /// <summary>
+        /// Returns all Keepers in the system associated with a particular animal.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all Keepers in the database taking care of a particular animal
+        /// </returns>
+        /// <param name="id">Animal Primary Key</param>
+        /// <example>
+        /// GET: api/KeeperData/ListKeepersForAnimal/1
+        /// </example>
+        [HttpGet]
+        [Route("api/CompanyData/ListCompanyForJobApplication/{id}")]
+        [ResponseType(typeof(CompaniesDto))]
+        public IHttpActionResult ListCompanyForJobApplication(int id)
+        {
+
+            //SQL Equivalent:
+            //select keepers.*, keeperanimals.* from animals inner join keeperanimals on keeperanimals.keeperid = keepers.keeperid where
+            //keeperanimals.animalid = {id}
+
+            List<companies> companies = db.companies.Where(
+                k => k.jobApplications.Any(
+                    a => a.JobApplicationID == id)
+                ).ToList();
+            List<CompaniesDto> CompaniesDtos = new List<CompaniesDto>();
+
+            companies.ForEach(k => CompaniesDtos.Add(new CompaniesDto()
+            {
+                CompanyID = k.CompanyID,
+                CompanyName = k.CompanyName,
+                Industry = k.Industry,
+                CompanyLocation = k.CompanyLocation,
+                CompanyWebsite = k.CompanyWebsite
+            }));
+
+            return Ok(CompaniesDtos);
+        }
+
+
+        /// <summary>
+        /// Removes an association between a particular keeper and a particular animal
+        /// </summary>
+        /// <param name="CompanyID">The animal ID primary key</param>
+        /// <param name="jobApplicationID">The keeper ID primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST api/CompanyData/UnAssociateCompanyWithJob/9/1
+        /// </example>
+        [HttpPost]
+        [Route("api/CompanyData/UnAssociateCompanyWithJob/{CompanyID}/{jobApplicationID}")]
+        public IHttpActionResult UnAssociateCompanyWithJob(int CompanyID, int jobApplicationID)
+        {
+
+            companies SelectedCompany = db.companies.Include(a => a.jobApplications).Where(a => a.CompanyID == CompanyID).FirstOrDefault();
+            jobApplication SelectedApplication = db.jobApplications.Find(jobApplicationID);
+
+            if (SelectedCompany == null || SelectedApplication == null)
+            {
+              return NotFound();
+            }
+
+            Debug.WriteLine("input animal id is: " + CompanyID);
+            Debug.WriteLine("selected animal name is: " + SelectedCompany.CompanyName);
+            Debug.WriteLine("input keeper id is: " + jobApplicationID);
+            Debug.WriteLine("selected keeper name is: " + SelectedApplication.JobTitle);
+
+            //todo: verify that the keeper actually is keeping track of the animal
+
+            SelectedCompany.jobApplications.Remove(SelectedApplication);
+            db.SaveChanges();
+
+            return Ok();
         }
         /// <summary>
         /// Updates a particular companies in the system with POST Data input

@@ -1,0 +1,26 @@
+﻿﻿@model IEnumerable<jobApplicationTracking.Models.CompaniesDto>
+@{
+    ViewBag.Title = "List";
+}
+
+
+
+<div class="container">
+    <h2 class="text-center mb-4">Companies List</h2>
+    <a href="/companies/New" class="btn btn-success mb-3">Add New Company</a>
+    <div class="row">
+        @foreach (var company in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="/companies/Details/@company.CompanyID">@company.CompanyName</a></h5>
+                        <p class="card-text">Location: @company.CompanyLocation</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

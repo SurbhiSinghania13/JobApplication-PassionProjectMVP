@@ -1,0 +1,43 @@
+﻿@model jobApplicationTracking.Models.CompaniesDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Update Company</h2>
+                    <form action="/companies/Update/@Model.CompanyID" method="POST">
+                        <div style="display:none;">
+                            @* Pass through the Species ID *@
+                            <input type="number" name="CompanyID" value="@Model.CompanyID" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="companyName" class="form-label">Company Name:</label>
+                            <input type="text" class="form-control" id="companyName" name="CompanyName" value="@Model.CompanyName" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="industry" class="form-label">Industry:</label>
+                            <input type="text" class="form-control" id="industry" name="Industry" value="@Model.Industry" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="companyLocation" class="form-label">Company Location:</label>
+                            <input type="text" class="form-control" id="companyLocation" name="CompanyLocation" value="@Model.CompanyLocation" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="companyWebsite" class="form-label">Company Website:</label>
+                            <input type="text" class="form-control" id="companyWebsite" name="CompanyWebsite" value="@Model.CompanyWebsite" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Company</button>
+                        <a href="/companies/Details/@Model.CompanyID" class="btn btn-secondary">Cancel</a>
+        
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

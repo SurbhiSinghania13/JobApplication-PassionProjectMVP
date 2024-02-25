@@ -1,0 +1,25 @@
+﻿﻿@model IEnumerable<jobApplicationTracking.Models.UserDto>
+@{
+    ViewBag.Title = "List";
+}
+
+
+<div class="container">
+    <h2 class="text-center mb-4">Users List</h2>
+    <a href="/User/New" class="btn btn-success mb-3">Add New User</a>
+    <div class="row">
+        @foreach (var user in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href="/User/Details/@user.UserId">@user.UserName</a></h5>
+                        <p class="card-text">User ID: @user.UserId</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+

@@ -8,6 +8,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using System.Diagnostics;
 
 namespace jobApplicationTracking.Controllers
 {
@@ -46,6 +47,40 @@ namespace jobApplicationTracking.Controllers
         }
 
         /// <summary>
+        /// Returns all Uers in the system associated with a particular application.
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all Users applied on particular application
+        /// </returns>
+        /// <param name="id">Job Application Primary Key</param>
+        /// <example>
+        /// GET: api/UserData/ListUsersForApplication/1
+        /// </example>
+        [HttpGet]
+        [Route("api/UserData/ListUsersForApplication/{id}")]
+        [ResponseType(typeof(UserDto))]
+        public IHttpActionResult ListUsersForApplication(int id)
+        {
+
+            List<User> Users = db.Users1.Where(
+                u => u.jobApplications.Any(
+                    j => j.JobApplicationID == id)
+                ).ToList();
+            List<UserDto> UserDtos = new List<UserDto>();
+
+            Users.ForEach(u => UserDtos.Add(new UserDto()
+            {
+                UserId = u.UserId,
+                UserName = u.UserName,
+                UserEmail = u.UserEmail,
+                UserPortfolioUrl = u.UserPortfolioUrl
+            }));
+
+            return Ok(UserDtos);
+        }
+
+        /// <summary>
         /// Returns all Users in the system.
         /// </summary>
         /// <returns>
@@ -77,6 +112,89 @@ namespace jobApplicationTracking.Controllers
             }
 
             return Ok(UserDto);
+        }
+
+        /// <summary>
+        /// Associates a particular keeper with a particular animal
+        /// </summary>
+        /// <param name="UserId">The animal ID primary key</param>
+        /// <param name="jobApplicationID">The keeper ID primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST api/AnimalData/AssociateAnimalWithKeeper/9/1
+        /// </example>
+        /// Animal -> User
+        //   keeper-job
+        /// 
+
+        [HttpPost]
+        [Route("api/UserData/AssociateUserWithJob/{UserId}/{jobApplicationID}")]
+        public IHttpActionResult AssociateUserWithJob(int UserId, int jobApplicationID)
+        {
+
+            User SelectedUser = db.Users1.Include(a => a.jobApplications).Where(a => a.UserId == UserId).FirstOrDefault();
+            jobApplication SelectedApplication = db.jobApplications.Find(jobApplicationID);
+
+            if (SelectedUser == null || SelectedApplication == null)
+            {
+                return NotFound();
+            }
+
+            Debug.WriteLine("input animal id is: " + UserId);
+            Debug.WriteLine("selected animal name is: " + SelectedUser.UserName);
+            Debug.WriteLine("input keeper id is: " + jobApplicationID);
+            Debug.WriteLine("selected keeper name is: " + SelectedApplication.JobTitle);
+
+            //SQL equivalent:
+            //insert into keeperanimals (animalid, keeperid) values ({aid},{kid})
+
+            SelectedUser.jobApplications.Add(SelectedApplication);
+            db.SaveChanges();
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Removes an association between a particular keeper and a particular animal
+        /// </summary>
+        /// <param name="UserId">The animal ID primary key</param>
+        /// <param name="jobApplicationID">The keeper ID primary key</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        /// POST api/AnimalData/AssociateAnimalWithKeeper/9/1
+        /// </example>
+        [HttpPost]
+        [Route("api/UserData/UnAssociateUserWithJob/{UserId}/{jobApplicationID}")]
+        public IHttpActionResult UnAssociateUserWithJob(int UserId, int jobApplicationID)
+        {
+
+            User SelectedUser = db.Users1.Include(a => a.jobApplications).Where(a => a.UserId == UserId).FirstOrDefault();
+            jobApplication SelectedApplication = db.jobApplications.Find(jobApplicationID);
+
+            if (SelectedUser == null || SelectedApplication == null)
+            {
+                return NotFound();
+            }
+
+            Debug.WriteLine("input animal id is: " + UserId);
+            Debug.WriteLine("selected animal name is: " + SelectedUser.UserName);
+            Debug.WriteLine("input keeper id is: " + jobApplicationID);
+            Debug.WriteLine("selected keeper name is: " + SelectedApplication.JobTitle);
+
+            //todo: verify that the keeper actually is keeping track of the animal
+
+            SelectedUser.jobApplications.Remove(SelectedApplication);
+            db.SaveChanges();
+
+            return Ok();
         }
 
         /// <summary>

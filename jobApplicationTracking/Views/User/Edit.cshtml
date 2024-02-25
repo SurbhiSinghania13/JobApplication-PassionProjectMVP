@@ -1,0 +1,38 @@
+﻿@model jobApplicationTracking.Models.UserDto
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Update User</h2>
+                    <form action="/User/Update/@Model.UserId" method="POST">
+                        <div style="display:none;">
+                            @* Pass through the Keeper ID *@
+                            <input type="number" name="UserId" value="@Model.UserId" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">Name:</label>
+                            <input type="text" class="form-control" id="userName" name="UserName" value="@Model.UserName" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="userEmail" class="form-label">Email:</label>
+                            <input type="text" class="form-control" id="userEmail" name="UserEmail" value="@Model.UserEmail" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="userPortfolioUrl" class="form-label">Portfolio Url:</label>
+                            <input type="text" class="form-control" id="userPortfolioUrl" name="UserPortfolioUrl" value="@Model.UserPortfolioUrl" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update User</button>
+                        <a href="/User/Details/@Model.UserId" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

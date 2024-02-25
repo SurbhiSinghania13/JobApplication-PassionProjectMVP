@@ -1,0 +1,41 @@
+﻿﻿@model jobApplicationTracking.Models.ViewModels.DetailsCompanies
+
+
+@{
+    ViewBag.Title = "View";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h4 class="card-title mb-0">@Model.SelectedCompanies.CompanyName</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3"><strong>Location:</strong> @Model.SelectedCompanies.CompanyLocation</div>
+                    <div class="mb-3"><strong>Industry:</strong> @Model.SelectedCompanies.Industry</div>
+                    <div class="mb-3"><strong>Website:</strong> @Model.SelectedCompanies.CompanyWebsite</div>
+                    <div>
+                        <a href="/companies/Edit/@Model.SelectedCompanies.CompanyID" class="btn btn-primary mr-2">Update</a>
+                        <a href="/companies/DeleteConfirm/@Model.SelectedCompanies.CompanyID" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Open Jobs for this Company:</h5>
+                    @foreach (var job in Model.OpenJobs)
+                    {
+                        <a href="/jobApplication/Details/@job.JobApplicationID" class="d-block mb-2">@job.JobTitle</a>
+                        <!-- You can uncomment the following line to add a delete link for each job -->
+                        <!-- <a href="/companies/Unassociate/@Model.SelectedCompanies.CompanyID?JobApplicationID=@job.JobApplicationID" class="text-danger">[x] Delete</a> -->
+                    }
+                </div>
+            </div>
+            <a href="/companies/List" class="btn btn-secondary mt-3">Go back to list</a>
+        </div>
+    </div>
+</div>
+
+

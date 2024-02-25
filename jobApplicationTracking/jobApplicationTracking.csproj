@@ -182,10 +182,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CompanyDataController.cs" />
+    <Compile Include="Controllers\companiesController.cs" />
+    <Compile Include="Controllers\companiesDataController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\jobApplicationController.cs" />
     <Compile Include="Controllers\jobApplicationDataController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserDataController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -202,9 +205,9 @@
     <Compile Include="Migrations\202402110251225_jobapplications.designer.cs">
       <DependentUpon>202402110251225_jobapplications.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202402110256479_companies.cs" />
-    <Compile Include="Migrations\202402110256479_companies.designer.cs">
-      <DependentUpon>202402110256479_companies.cs</DependentUpon>
+    <Compile Include="Migrations\202402110256479_companies1.cs" />
+    <Compile Include="Migrations\202402110256479_companies1.designer.cs">
+      <DependentUpon>202402110256479_companies1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\202402110304553_jobapplicationcompany.cs" />
     <Compile Include="Migrations\202402110304553_jobapplicationcompany.designer.cs">
@@ -226,6 +229,22 @@
     <Compile Include="Migrations\202402110351329_jobapplicationusers.designer.cs">
       <DependentUpon>202402110351329_jobapplicationusers.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202402250127172_jobapplications41.cs" />
+    <Compile Include="Migrations\202402250127172_jobapplications41.designer.cs">
+      <DependentUpon>202402250127172_jobapplications41.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402250132585_jobapplications42.cs" />
+    <Compile Include="Migrations\202402250132585_jobapplications42.designer.cs">
+      <DependentUpon>202402250132585_jobapplications42.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402250137595_jobapplications43.cs" />
+    <Compile Include="Migrations\202402250137595_jobapplications43.designer.cs">
+      <DependentUpon>202402250137595_jobapplications43.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202402250141190_jobapplications44.cs" />
+    <Compile Include="Migrations\202402250141190_jobapplications44.designer.cs">
+      <DependentUpon>202402250141190_jobapplications44.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\companies.cs" />
@@ -233,6 +252,10 @@
     <Compile Include="Models\jobApplication.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\ViewModels\DetailsCompanies.cs" />
+    <Compile Include="Models\ViewModels\DetailsJobApplication.cs" />
+    <Compile Include="Models\ViewModels\DetailsUser.cs" />
+    <Compile Include="Models\ViewModels\UpdatejobApplication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -310,6 +333,21 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\jobApplication\List.cshtml" />
+    <Content Include="Views\jobApplication\Details.cshtml" />
+    <Content Include="Views\User\List.cshtml" />
+    <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\jobApplication\New.cshtml" />
+    <Content Include="Views\companies\List.cshtml" />
+    <Content Include="Views\companies\Details.cshtml" />
+    <Content Include="Views\User\New.cshtml" />
+    <Content Include="Views\companies\New.cshtml" />
+    <Content Include="Views\jobApplication\Edit.cshtml" />
+    <Content Include="Views\jobApplication\DeleteConfirm.cshtml" />
+    <Content Include="Views\User\Edit.cshtml" />
+    <Content Include="Views\User\DeleteConfirm.cshtml" />
+    <Content Include="Views\companies\Edit.cshtml" />
+    <Content Include="Views\companies\DeleteConfirm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -351,8 +389,8 @@
     <EmbeddedResource Include="Migrations\202402110251225_jobapplications.resx">
       <DependentUpon>202402110251225_jobapplications.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202402110256479_companies.resx">
-      <DependentUpon>202402110256479_companies.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202402110256479_companies1.resx">
+      <DependentUpon>202402110256479_companies1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402110304553_jobapplicationcompany.resx">
       <DependentUpon>202402110304553_jobapplicationcompany.cs</DependentUpon>
@@ -368,6 +406,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202402110351329_jobapplicationusers.resx">
       <DependentUpon>202402110351329_jobapplicationusers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402250127172_jobapplications41.resx">
+      <DependentUpon>202402250127172_jobapplications41.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402250132585_jobapplications42.resx">
+      <DependentUpon>202402250132585_jobapplications42.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402250137595_jobapplications43.resx">
+      <DependentUpon>202402250137595_jobapplications43.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202402250141190_jobapplications44.resx">
+      <DependentUpon>202402250141190_jobapplications44.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,0 +1,47 @@
+﻿﻿@model jobApplicationTracking.Models.ViewModels.DetailsJobApplication
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <h4 class="card-title mb-0">@Model.SelectedApplication.JobTitle</h4>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3"><strong>Location:</strong> @Model.SelectedApplication.JobLocation</div>
+                    <div class="mb-3">
+                        <strong>Register Company:</strong>
+                        <ul class="list-unstyled">
+                            @foreach (var company in Model.AssociateCompanies)
+                            {
+                                <li><a href="/companies/Details/@company.CompanyID">@company.CompanyName</a></li>
+                            }
+                        </ul>
+                    </div>
+                    <div>
+                        <a href="/jobApplication/Edit/@Model.SelectedApplication.JobApplicationID" class="btn btn-primary mr-2">Update</a>
+                        <a href="/jobApplication/DeleteConfirm/@Model.SelectedApplication.JobApplicationID" class="btn btn-danger">Delete</a>
+                    </div>
+                </div>
+            </div>
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-4">Applicants for @Model.SelectedApplication.JobTitle:</h5>
+                    <ul class="list-unstyled">
+                        @foreach (var user in Model.RegisteredUsers)
+                        {
+                            <li><a href="/User/Details/@user.UserId">@user.UserName</a></li>
+                        }
+                    </ul>
+                </div>
+            </div>
+            <a href="/jobApplication/List" class="btn btn-secondary mt-3">Go back to list</a>
+        </div>
+    </div>
+</div>
+
+
+

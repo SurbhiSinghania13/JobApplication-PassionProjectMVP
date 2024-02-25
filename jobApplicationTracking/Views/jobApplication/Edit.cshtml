@@ -1,0 +1,46 @@
+﻿@model jobApplicationTracking.Models.ViewModels.UpdatejobApplication
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Update Application</h2>
+                    <form action="/jobApplication/Update/@Model.SelectedApplication.JobApplicationID" method="POST">
+                        <div style="display:none;">
+                            @* Pass through the animal ID *@
+                            <input type="number" name="JobApplicationID" value="@Model.SelectedApplication.JobApplicationID" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobTitle" class="form-label">Job Title:</label>
+                            <input type="text" class="form-control" id="jobTitle" name="JobTitle" value="@Model.SelectedApplication.JobTitle" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="jobLocation" class="form-label">Job Location:</label>
+                            <input type="text" class="form-control" id="jobLocation" name="JobLocation" value="@Model.SelectedApplication.JobLocation" />
+                        </div>
+                        <div class="mb-3">
+                            <label for="companyID" class="form-label">Company ID:</label>
+                            <select class="form-select" id="companyID" name="CompanyID">
+                                @foreach (var companies in Model.CompaniesOptions)
+                                {
+                                    string selected = companies.CompanyID == Model.SelectedApplication.CompanyID ? "selected" : "";
+                                    <option value="@companies.CompanyID" @selected>@companies.CompanyName</option>
+                                }
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Application</button>
+                        <a href="/jobApplication/Details/@Model.SelectedApplication.JobApplicationID" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
