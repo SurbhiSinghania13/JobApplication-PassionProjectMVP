@@ -48,7 +48,6 @@ namespace jobApplicationTracking.Controllers
 
             ViewModel.SelectedApplication = SelectedApplication;
 
-            //show associated keepers with this animal
             url = "UserData/ListUsersForApplication/" + id;
             response = client.GetAsync(url).Result;
             IEnumerable<UserDto> RegisteredUsers = response.Content.ReadAsAsync<IEnumerable<UserDto>>().Result;
@@ -74,8 +73,6 @@ namespace jobApplicationTracking.Controllers
         // GET: jobApplication/New
         public ActionResult New()
         {
-            //information about all species in the system.
-            //GET api/speciesdata/listspecies
 
             string url = "CompanyData/ListCompanies";
             HttpResponseMessage response = client.GetAsync(url).Result;
@@ -90,8 +87,7 @@ namespace jobApplicationTracking.Controllers
         {
             Debug.WriteLine("the json payload is :");
             Debug.WriteLine(jobApplication.JobTitle);
-            //objective: add a new animal into our system using the API
-            //curl -H "Content-Type:application/json" -d @animal.json https://localhost:44324/api/animaldata/addanimal 
+
             string url = "jobApplicationData/AddJobApplication";
 
 
@@ -115,19 +111,16 @@ namespace jobApplicationTracking.Controllers
 
         }
 
-        // GET: Animal/Edit/5
+        // GET: jobApplication/Edit/5
         public ActionResult Edit(int id)
         {
             UpdatejobApplication ViewModel = new UpdatejobApplication();
 
-            //the existing animal information
             string url = "jobApplicationData/FindJobApplication/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
             jobApplicationDto SelectedApplication = response.Content.ReadAsAsync<jobApplicationDto>().Result;
             ViewModel.SelectedApplication = SelectedApplication;
 
-            // all species to choose from when updating this animal
-            //the existing animal information
             url = "CompanyData/ListCompanies";
             response = client.GetAsync(url).Result;
             IEnumerable<CompaniesDto> CompaniesOptions = response.Content.ReadAsAsync<IEnumerable<CompaniesDto>>().Result;
@@ -137,7 +130,7 @@ namespace jobApplicationTracking.Controllers
             return View(ViewModel);
         }
 
-        // POST: Animal/Update/5
+        // POST: jobApplication/Update/5
         [HttpPost]
         public ActionResult Update(int id, jobApplication jobApplication)
         {
@@ -157,7 +150,8 @@ namespace jobApplicationTracking.Controllers
                // return RedirectToAction("Error");
             //}
         }
-        // GET: Animal/Delete/5
+
+        // GET: jobApplication/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
             string url = "jobApplicationData/FindJobApplication/" + id;
@@ -166,7 +160,7 @@ namespace jobApplicationTracking.Controllers
             return View(SelectedApplication);
         }
 
-        // POST: Animal/Delete/5
+        // POST: jobApplication/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {

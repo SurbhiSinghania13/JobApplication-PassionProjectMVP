@@ -47,7 +47,7 @@ namespace jobApplicationTracking.Controllers
         }
 
         /// <summary>
-        /// Returns all Uers in the system associated with a particular application.
+        /// Returns all Users in the system associated with a particular application.
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
@@ -115,21 +115,18 @@ namespace jobApplicationTracking.Controllers
         }
 
         /// <summary>
-        /// Associates a particular keeper with a particular animal
+        /// Associates a particular user with a particular application
         /// </summary>
-        /// <param name="UserId">The animal ID primary key</param>
-        /// <param name="jobApplicationID">The keeper ID primary key</param>
+        /// <param name="UserId">The user ID primary key</param>
+        /// <param name="jobApplicationID">The application ID primary key</param>
         /// <returns>
         /// HEADER: 200 (OK)
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// POST api/AnimalData/AssociateAnimalWithKeeper/9/1
+        /// POST api/UserData/AssociateUserWithJob/1/16
         /// </example>
-        /// Animal -> User
-        //   keeper-job
-        /// 
 
         [HttpPost]
         [Route("api/UserData/AssociateUserWithJob/{UserId}/{jobApplicationID}")]
@@ -144,14 +141,6 @@ namespace jobApplicationTracking.Controllers
                 return NotFound();
             }
 
-            Debug.WriteLine("input animal id is: " + UserId);
-            Debug.WriteLine("selected animal name is: " + SelectedUser.UserName);
-            Debug.WriteLine("input keeper id is: " + jobApplicationID);
-            Debug.WriteLine("selected keeper name is: " + SelectedApplication.JobTitle);
-
-            //SQL equivalent:
-            //insert into keeperanimals (animalid, keeperid) values ({aid},{kid})
-
             SelectedUser.jobApplications.Add(SelectedApplication);
             db.SaveChanges();
 
@@ -159,17 +148,17 @@ namespace jobApplicationTracking.Controllers
         }
 
         /// <summary>
-        /// Removes an association between a particular keeper and a particular animal
+        /// Removes an association between a particular user and a particular application
         /// </summary>
-        /// <param name="UserId">The animal ID primary key</param>
-        /// <param name="jobApplicationID">The keeper ID primary key</param>
+        /// <param name="UserId">The user ID primary key</param>
+        /// <param name="jobApplicationID">The application ID primary key</param>
         /// <returns>
         /// HEADER: 200 (OK)
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// POST api/AnimalData/AssociateAnimalWithKeeper/9/1
+        /// POST api/UserData/UnAssociateUserWithJob/1/16
         /// </example>
         [HttpPost]
         [Route("api/UserData/UnAssociateUserWithJob/{UserId}/{jobApplicationID}")]
@@ -183,13 +172,6 @@ namespace jobApplicationTracking.Controllers
             {
                 return NotFound();
             }
-
-            Debug.WriteLine("input animal id is: " + UserId);
-            Debug.WriteLine("selected animal name is: " + SelectedUser.UserName);
-            Debug.WriteLine("input keeper id is: " + jobApplicationID);
-            Debug.WriteLine("selected keeper name is: " + SelectedApplication.JobTitle);
-
-            //todo: verify that the keeper actually is keeping track of the animal
 
             SelectedUser.jobApplications.Remove(SelectedApplication);
             db.SaveChanges();

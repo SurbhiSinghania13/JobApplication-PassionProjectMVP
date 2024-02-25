@@ -9,7 +9,6 @@ namespace jobApplicationTracking.Models.ViewModels
     {
         public jobApplicationDto SelectedApplication { get; set; }
 
-        // all species to choose from when updating this animal
 
         public IEnumerable<CompaniesDto> CompaniesOptions { get; set; }
     }

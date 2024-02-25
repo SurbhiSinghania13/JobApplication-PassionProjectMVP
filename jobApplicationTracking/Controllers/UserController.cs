@@ -13,7 +13,7 @@ namespace jobApplicationTracking.Controllers
 {
     public class UserController : Controller
     {
-        // GET: User
+        
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
 
@@ -26,45 +26,29 @@ namespace jobApplicationTracking.Controllers
         // GET: User/List
         public ActionResult List()
         {
-            //objective: communicate with our Keeper data api to retrieve a list of Keepers
-            //curl https://localhost:44324/api/Keeperdata/listkeepers
 
 
             string url = "UserData/ListUsers";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            //Debug.WriteLine("The response code is ");
-            //Debug.WriteLine(response.StatusCode);
-
             IEnumerable<UserDto> Users = response.Content.ReadAsAsync<IEnumerable<UserDto>>().Result;
-            //Debug.WriteLine("Number of Keepers received : ");
-            //Debug.WriteLine(Keepers.Count());
-
 
             return View(Users);
         }
 
-        // GET: Keeper/Details/5
+        // GET: User/Details/5
         public ActionResult Details(int id)
         {
             DetailsUser ViewModel = new DetailsUser();
 
-            //objective: communicate with our Keeper data api to retrieve one Keeper
-            //curl https://localhost:44324/api/Keeperdata/findkeeper/{id}
 
             string url = "UserData/FindUser/" + id;
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            //Debug.WriteLine("The response code is ");
-            //Debug.WriteLine(response.StatusCode);
-
             UserDto SelectedUser = response.Content.ReadAsAsync<UserDto>().Result;
-            //Debug.WriteLine("Keeper received : ");
-            //Debug.WriteLine(SelectedKeeper.KeeperFirstName);
 
             ViewModel.SelectedUser = SelectedUser;
 
-            //show all animals under the care of this keeper
             url = "jobApplicationData/ListJobApplicationOfUser/" + id;
             response = client.GetAsync(url).Result;
             IEnumerable<jobApplicationDto> AppliedJobs = response.Content.ReadAsAsync<IEnumerable<jobApplicationDto>>().Result;
@@ -79,22 +63,22 @@ namespace jobApplicationTracking.Controllers
 
             return View(ViewModel);
         }
+
+        // GET: User/New
         public ActionResult New()
         {
-            //information about all species in the system.
-            //GET api/speciesdata/listspecies
             return View();
         }
+
+
         // POST: User/Create
         [HttpPost]
         public ActionResult Create(User User)
         {
             Debug.WriteLine("the json payload is :");
             Debug.WriteLine(User.UserName);
-            //objective: add a new animal into our system using the API
-            //curl -H "Content-Type:application/json" -d @animal.json https://localhost:44324/api/animaldata/addanimal 
-            string url = "UserData/AddUser";
 
+            string url = "UserData/AddUser";
 
             string jsonpayload = jss.Serialize(User);
             Debug.WriteLine(jsonpayload);
@@ -121,15 +105,13 @@ namespace jobApplicationTracking.Controllers
 
             return View();
         }
-        //Animal -> SUer
-        //keeper-job
+ 
         //POST: User/Associate/{UserId}/{jobApplicationId}
         [HttpPost]
         public ActionResult Associate(int id, int JobApplicationID)
         {
             Debug.WriteLine("Attempting to associate animal :" + id + " with keeper " + JobApplicationID);
 
-            //call our api to associate animal with keeper
             string url = "UserData/AssociateUserWithJob/" + id + "/" + JobApplicationID;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
@@ -139,13 +121,12 @@ namespace jobApplicationTracking.Controllers
         }
 
 
-        //Get: Animal/UnAssociate/{id}?KeeperID={keeperID}
+        // GET: User/UnAssociate/{id}?JobApplicationID={JobApplicationID}
         [HttpGet]
         public ActionResult UnAssociate(int id, int JobApplicationID)
         {
             Debug.WriteLine("Attempting to unassociate animal :" + id + " with keeper: " + JobApplicationID);
 
-            //call our api to associate animal with keeper
             string url = "UserData/UnAssociateUserWithJob/" + id + "/" + JobApplicationID;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
@@ -153,6 +134,8 @@ namespace jobApplicationTracking.Controllers
 
             return RedirectToAction("Details/" + id);
         }
+
+        // GET: User/Edit/2
         public ActionResult Edit(int id)
         {
             string url = "UserData/FindUser/" + id;
@@ -161,7 +144,7 @@ namespace jobApplicationTracking.Controllers
             return View(selectedUser);
         }
 
-        // POST: Keeper/Update/5
+        // POST: User//Update/5
         [HttpPost]
         public ActionResult Update(int id, User User)
         {
@@ -182,7 +165,7 @@ namespace jobApplicationTracking.Controllers
           //  }
         }
 
-        // GET: Keeper/Delete/5
+        // GET: User/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
             string url = "UserData/FindUser/" + id;
@@ -191,7 +174,7 @@ namespace jobApplicationTracking.Controllers
             return View(selectedUser);
         }
 
-        // POST: Keeper/Delete/5
+        // POST: User/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {

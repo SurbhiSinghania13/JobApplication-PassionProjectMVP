@@ -12,7 +12,7 @@
                     <h2 class="card-title mb-4">Update Application</h2>
                     <form action="/jobApplication/Update/@Model.SelectedApplication.JobApplicationID" method="POST">
                         <div style="display:none;">
-                            @* Pass through the animal ID *@
+                            @* Pass through the jobApplication ID *@
                             <input type="number" name="JobApplicationID" value="@Model.SelectedApplication.JobApplicationID" />
                         </div>
                         <div class="mb-3">

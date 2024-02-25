@@ -81,25 +81,21 @@ namespace jobApplicationTracking.Controllers
         }
 
         /// <summary>
-        /// Returns all Keepers in the system associated with a particular animal.
+        /// Returns company in the system associated with a particular application.
         /// </summary>
         /// <returns>
         /// HEADER: 200 (OK)
-        /// CONTENT: all Keepers in the database taking care of a particular animal
+        /// CONTENT: company in the database of a particular application
         /// </returns>
-        /// <param name="id">Animal Primary Key</param>
+        /// <param name="id">Application Primary Key</param>
         /// <example>
-        /// GET: api/KeeperData/ListKeepersForAnimal/1
+        /// GET: api/CompanyData/ListCompanyForJobApplication/1
         /// </example>
         [HttpGet]
         [Route("api/CompanyData/ListCompanyForJobApplication/{id}")]
         [ResponseType(typeof(CompaniesDto))]
         public IHttpActionResult ListCompanyForJobApplication(int id)
         {
-
-            //SQL Equivalent:
-            //select keepers.*, keeperanimals.* from animals inner join keeperanimals on keeperanimals.keeperid = keepers.keeperid where
-            //keeperanimals.animalid = {id}
 
             List<companies> companies = db.companies.Where(
                 k => k.jobApplications.Any(
@@ -121,17 +117,17 @@ namespace jobApplicationTracking.Controllers
 
 
         /// <summary>
-        /// Removes an association between a particular keeper and a particular animal
+        /// Removes an association between a particular company and a particular application
         /// </summary>
-        /// <param name="CompanyID">The animal ID primary key</param>
-        /// <param name="jobApplicationID">The keeper ID primary key</param>
+        /// <param name="CompanyID">The company ID primary key</param>
+        /// <param name="jobApplicationID">The application ID primary key</param>
         /// <returns>
         /// HEADER: 200 (OK)
         /// or
         /// HEADER: 404 (NOT FOUND)
         /// </returns>
         /// <example>
-        /// POST api/CompanyData/UnAssociateCompanyWithJob/9/1
+        /// POST api/CompanyData/UnAssociateCompanyWithJob/2/16
         /// </example>
         [HttpPost]
         [Route("api/CompanyData/UnAssociateCompanyWithJob/{CompanyID}/{jobApplicationID}")]

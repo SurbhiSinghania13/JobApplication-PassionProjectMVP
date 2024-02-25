@@ -14,7 +14,7 @@ namespace jobApplicationTracking.Controllers
 {
     public class companiesController : Controller
     {
-        // GET: Company
+    
         private static readonly HttpClient client;
         private JavaScriptSerializer jss = new JavaScriptSerializer();
 
@@ -24,32 +24,23 @@ namespace jobApplicationTracking.Controllers
             client.BaseAddress = new Uri("https://localhost:44316/api/");
         }
 
-        // GET: Species/List
+        // GET: companies/List
         public ActionResult List()
         {
-            //objective: communicate with our Species data api to retrieve a list of Speciess
-            //curl https://localhost:44324/api/Speciesdata/listSpeciess
 
 
             string url = "CompanyData/ListCompanies";
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            //Debug.WriteLine("The response code is ");
-            //Debug.WriteLine(response.StatusCode);
-
             IEnumerable<CompaniesDto> Companies = response.Content.ReadAsAsync<IEnumerable<CompaniesDto>>().Result;
-            //Debug.WriteLine("Number of Speciess received : ");
-            //Debug.WriteLine(Speciess.Count());
 
 
             return View(Companies);
         }
 
-        // GET: Species/Details/5
+        // GET: companies/Details/5
         public ActionResult Details(int id)
         {
-            //objective: communicate with our Species data api to retrieve one Species
-            //curl https://localhost:44324/api/Speciesdata/findspecies/{id}
 
             DetailsCompanies ViewModel = new DetailsCompanies();
 
@@ -60,8 +51,7 @@ namespace jobApplicationTracking.Controllers
 
             ViewModel.SelectedCompanies = SelectedCompanies;
 
-            //showcase information about animals related to this species
-            //send a request to gather information about animals related to a particular species ID
+            
             url = "jobApplicationData/ListApplicationForCompany/" + id;
             response = client.GetAsync(url).Result;
             IEnumerable<jobApplicationDto> OpenJobs = response.Content.ReadAsAsync<IEnumerable<jobApplicationDto>>().Result;
@@ -77,19 +67,18 @@ namespace jobApplicationTracking.Controllers
 
             return View();
         }
+
+        // GET: companies/New
         public ActionResult New()
         {
             return View();
         }
 
-        // POST: Company/Create
+        // POST: companies/Create
         [HttpPost]
         public ActionResult Create(Models.companies companies)
         {
             Debug.WriteLine("the json payload is :");
-            //Debug.WriteLine(Species.SpeciesName);
-            //objective: add a new Species into our system using the API
-            //curl -H "Content-Type:application/json" -d @Species.json https://localhost:44324/api/Speciesdata/addSpecies 
             string url = "CompanyData/AddCompany";
 
 
@@ -111,13 +100,13 @@ namespace jobApplicationTracking.Controllers
 
 
         }
-        //Get: Animal/UnAssociate/{id}?KeeperID={keeperID}
+
+        // GET: companies/UnAssociate/{id}?JobApplicationID={JobApplicationID}
         [HttpGet]
         public ActionResult UnAssociate(int id, int JobApplicationID)
         {
             Debug.WriteLine("Attempting to unassociate animal :" + id + " with keeper: " + JobApplicationID);
 
-            //call our api to associate animal with keeper
             string url = "CompanyData/UnAssociateCompanyWithJob/" + id + "/" + JobApplicationID;
             HttpContent content = new StringContent("");
             content.Headers.ContentType.MediaType = "application/json";
@@ -125,7 +114,7 @@ namespace jobApplicationTracking.Controllers
 
             return RedirectToAction("Details/" + id);
         }
-        // GET: Species/Edit/5
+        // GET: companies/Edit/5
         public ActionResult Edit(int id)
         {
             string url = "CompanyData/FindCompanies/" + id;
@@ -134,7 +123,7 @@ namespace jobApplicationTracking.Controllers
             return View(selectedCompany);
         }
 
-        // POST: Species/Update/5
+        // POST: companies/Update/5
         [HttpPost]
         public ActionResult Update(int id, Models.companies companies)
         {
@@ -155,7 +144,7 @@ namespace jobApplicationTracking.Controllers
             //}
         }
 
-        // GET: Species/Delete/5
+        // GET: companies/Delete/5
         public ActionResult DeleteConfirm(int id)
         {
             string url = "CompanyData/FindCompanies/" + id;
@@ -164,7 +153,7 @@ namespace jobApplicationTracking.Controllers
             return View(selectedCompany);
         }
 
-        // POST: Species/Delete/5
+        // POST: companies/Delete/5
         [HttpPost]
         public ActionResult Delete(int id)
         {

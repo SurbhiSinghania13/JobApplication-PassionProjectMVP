@@ -12,7 +12,5 @@ namespace jobApplicationTracking.Models.ViewModels
 
         public IEnumerable<CompaniesDto> AssociateCompanies { get; set; }
 
-
-        //public IEnumerable<UserDto> AvailableKeepers { get; set; }
     }
 }

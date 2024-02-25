@@ -28,8 +28,7 @@
                     @foreach (var job in Model.OpenJobs)
                     {
                         <a href="/jobApplication/Details/@job.JobApplicationID" class="d-block mb-2">@job.JobTitle</a>
-                        <!-- You can uncomment the following line to add a delete link for each job -->
-                        <!-- <a href="/companies/Unassociate/@Model.SelectedCompanies.CompanyID?JobApplicationID=@job.JobApplicationID" class="text-danger">[x] Delete</a> -->
+          
                     }
                 </div>
             </div>
