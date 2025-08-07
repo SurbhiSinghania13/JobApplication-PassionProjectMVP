@@ -1,11 +1,42 @@
-# JobApplication Tracking System
+# 💼 Job Application Tracking System
 
-## Made using C# Vb.net
+A full-featured **Job Application Tracking System** built using **C#**, **VB.NET**, **JavaScript**, **HTML**, and **SQL Server**.  
+This passion project is designed to streamline the job application process for both **applicants** and **companies**.
 
-Passion Project: "Job Application Tracking System."
+---
 
-This project is designed to help applicants keep track of their job applications seamlessly. It's a platform where users can easily monitor the positions they've applied for and even apply new ones.
+## 📌 Overview
 
-Moreover, it's not just about applicants. The system also serves as a job position platform. It can effortlessly track which applicants have applied for which positions and for which companies.
+This system enables:
+- **Applicants** to track the jobs they've applied for.
+- **Companies** to manage job listings and monitor applicants.
+- **Admins** to oversee job postings and applications across the platform.
 
-Last but not least, it's beneficial for companies too. They can view open job positions and keep track of the applications they've received.
+It's more than just a tracker — it’s a central hub for managing **job applications**, **positions**, and **companies**, all from one place.
+
+---
+
+## 🚀 Features
+
+### 👨‍💼 For Applicants:
+- Add, view, and update job applications.
+- Track status for each application.
+
+### 🏢 For Companies:
+- View open positions and applicant details.
+- Monitor application inflow for different job openings.
+
+### 🔐 For Admins:
+- Create and manage job positions.
+- Monitor all applications submitted on the platform.
+
+---
+
+## 🧰 Tech Stack
+
+| Layer         | Technology Used     |
+|---------------|---------------------|
+| Backend       | C#, VB.NET          |
+| Frontend      | HTML, CSS, JavaScript |
+| Database      | SQL Server          |
+
